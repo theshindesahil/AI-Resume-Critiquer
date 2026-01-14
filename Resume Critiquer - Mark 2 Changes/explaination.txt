@@ -1,0 +1,152 @@
+Got it 👍 — this is a **Streamlit app** you have that works as a full-feature **AI-powered resume critiquer**. I’ll break it down into parts so it’s easier to follow.
+
+---
+
+## **1. Purpose of the App**
+
+* Lets a user upload resumes (**PDF/TXT**).
+* Splits long resumes into **chunks** so AI can handle them.
+* Sends chunks to **OpenAI** for structured analysis.
+* Aggregates feedback, calculates scores, and displays **charts**.
+* Stores results in a **SQLite database** (optional).
+* Allows **export** to CSV/Excel/JSON.
+* Gives both **per-resume** and **batch/aggregate** analytics.
+
+---
+
+## **2. Imports**
+
+The code uses:
+
+* `streamlit` → UI and app framework.
+* `PyPDF2` → extract text from PDF resumes.
+* `pandas` → data handling + export.
+* `plotly` → charts (Bar, Radar, Pie).
+* `sqlite3` → save analysis into a local DB.
+* `OpenAI` → call GPT model for reviewing resumes.
+* `dotenv` → load API key from `.env`.
+* Utilities like `json`, `re`, `datetime`, `os`, `time`.
+
+---
+
+## **3. Configuration**
+
+* Loads API key from `.env`.
+* If API key missing → stops app.
+* Sets **page layout** and injects CSS for a modern UI (rounded cards, buttons, clean font).
+
+---
+
+## **4. Sidebar Controls**
+
+The sidebar lets the user configure:
+
+* **Target job role** (optional).
+* **Chart type**: Bar, Radar, Pie.
+* **Model** (defaults to `gpt-4o-mini`).
+* **max\_tokens** (size of AI response).
+* **Chunk size** + **Overlap** → for splitting long resumes.
+* **Save to SQLite** toggle.
+
+---
+
+## **5. Helper Functions**
+
+* **Text extraction**
+
+  * `extract_text_from_pdf_bytes()` → extracts from PDFs.
+  * `extract_text_from_uploaded()` → handles both PDF/TXT.
+
+* **Chunking**
+
+  * `chunk_text()` → breaks resume into smaller text parts (overlapping so no info is lost).
+
+* **Prompt builder**
+
+  * `build_prompt_for_chunk()` → creates a strict JSON-only prompt for AI.
+
+* **OpenAI call**
+
+  * `safe_openai_chat()` → sends prompt to GPT model and returns response.
+
+* **JSON parsing**
+
+  * `extract_first_json()` → safely extracts JSON from AI response (handles messy outputs using regex).
+
+* **Charts**
+
+  * Functions to make Radar/Bar/Pie with Plotly.
+
+* **DB Setup**
+
+  * If DB enabled → creates `analyses` table to store results.
+
+---
+
+## **6. Main App Workflow**
+
+### Step 1: File Upload
+
+* User uploads **one or more resumes**.
+
+### Step 2: Click “Analyze”
+
+* For each file:
+
+  1. **Extract text** (PDF/TXT).
+  2. **Chunk** text.
+  3. For each chunk → call GPT model → parse JSON.
+  4. Collect all chunk results.
+  5. **Aggregate** (average scores, combine feedback, merge pros/cons).
+
+### Step 3: Show Results (per resume)
+
+* A **card** is displayed with:
+
+  * Overall score
+  * Category metrics (Clarity, Skills, ATS, etc.)
+  * Recommendations, Pros, Cons
+  * **Charts** (user’s choice: Bar/Radar/Pie)
+  * Detailed feedback per category
+
+### Step 4: Save Results
+
+* Results stored in:
+
+  * Python list (`results_records`)
+  * SQLite database (if enabled)
+  * CSV/Excel/JSON export
+
+### Step 5: Aggregated Analytics
+
+* Averages across all resumes → show aggregated chart.
+
+### Step 6: Optional Database Viewer
+
+* Can expand and view the last 100 entries from DB.
+
+---
+
+## **7. Closing**
+
+* On exit → closes DB connection safely.
+
+---
+
+## **8. Key Features in One Line**
+
+* **Multi-resume batch analysis**
+* **Chunked AI processing** (handles long resumes)
+* **Structured JSON outputs from GPT**
+* **Interactive visualization** (Plotly)
+* **SQLite persistence**
+* **Export results**
+
+---
+
+👉 In short:
+This app is like a **resume analyzer dashboard** powered by GPT, that works in bulk, gives structured JSON feedback, visual insights, and persistent storage.
+
+---
+
+Do you want me to make a **simplified flowchart** of this workflow (upload → chunk → AI → aggregate → display/export), so it’s even clearer?

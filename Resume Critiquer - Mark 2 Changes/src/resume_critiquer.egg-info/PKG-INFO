@@ -1,0 +1,140 @@
+Metadata-Version: 2.4
+Name: resume-critiquer
+Version: 0.1.0
+Summary: Enter your description
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: kaleido>=1.0.0
+Requires-Dist: openai>=1.106.1
+Requires-Dist: openpyxl>=3.1.5
+Requires-Dist: pandas>=2.3.2
+Requires-Dist: plotly>=6.3.0
+Requires-Dist: pypdf2>=3.0.1
+Requires-Dist: python-dotenv>=1.1.1
+Requires-Dist: reportlab>=4.4.3
+Requires-Dist: streamlit>=1.49.1
+
+# 📃 AI Resume Critiquer
+
+An interactive **Streamlit web app** that allows users to upload their resumes (PDF or TXT) and receive **AI-powered feedback**.  
+The app leverages **OpenAI's GPT models** to generate structured, ATS-friendly, and actionable feedback for resume improvement.  
+
+---
+
+## 🚀 Features
+- Upload resume in **PDF** or **TXT** format.
+- Enter an optional **target job role** for tailored analysis.
+- AI provides **structured feedback**:
+  - Content Clarity & Impact  
+  - Skills Presentation  
+  - Experience Descriptions  
+  - Tailoring for target role  
+  - Structure & Readability  
+  - Specific Improvements  
+  - Final Conclusion  
+- **Progress bar + stepwise analysis animation** while processing.  
+- **Fade-in animation** for results and a **"Done" button** to refresh the app.  
+- 🎈 Fun Streamlit animations (balloons, spinners).  
+
+---
+
+## 📦 Dependencies
+
+### 1. [Streamlit](https://streamlit.io/)  
+- **Reason**: Main framework for building the web app.  
+- Used for UI elements like file uploader, text inputs, progress bars, and displaying results.  
+
+### 2. [PyPDF2](https://pypi.org/project/PyPDF2/)  
+- **Reason**: Extracts text from uploaded PDF resumes.  
+- Ensures resume parsing works for multi-page PDFs.  
+
+### 3. [io (built-in Python module)](https://docs.python.org/3/library/io.html)  
+- **Reason**: Converts uploaded PDF files into a byte stream for processing with PyPDF2.  
+
+### 4. [os (built-in Python module)](https://docs.python.org/3/library/os.html)  
+- **Reason**: Accesses environment variables (like the API key).  
+
+### 5. [time (built-in Python module)](https://docs.python.org/3/library/time.html)  
+- **Reason**: Simulates progress bar steps with delays for a better UX.  
+
+### 6. [python-dotenv](https://pypi.org/project/python-dotenv/)  
+- **Reason**: Loads environment variables (like `OPENAI_API_KEY`) from a `.env` file.  
+- Keeps sensitive credentials out of the codebase.  
+
+### 7. [OpenAI Python Client](https://pypi.org/project/openai/)  
+- **Reason**: Connects to OpenAI GPT models (like `gpt-4o-mini`) to generate feedback.  
+
+---
+
+## ⚙️ Installation & Setup
+
+1. Clone this repository:  
+   ```bash
+   git clone https://github.com/your-username/ai-resume-critiquer.git
+   cd ai-resume-critiquer
+   ```
+
+2. Create a virtual environment and activate it:  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # On Mac/Linux
+   venv\Scripts\activate      # On Windows
+   ```
+
+3. Install dependencies:  
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Create a `.env` file in the root folder and add your OpenAI API key:  
+   ```env
+   OPENAI_API_KEY=your_api_key_here
+   ```
+
+5. Run the Streamlit app:  
+   ```bash
+   streamlit run app.py
+   ```
+
+---
+
+## 📑 Example `.env` file
+```env
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+---
+
+## 📋 requirements.txt
+```txt
+streamlit
+PyPDF2
+openai
+python-dotenv
+```
+
+---
+
+## 🎨 Extra Resources Used
+- **CSS Animations**: Custom styling to make buttons interactive and results fade-in smoothly.  
+- **Streamlit Animations**: `st.balloons()`, `st.spinner()`, `st.progress()` for fun and engaging UX.  
+
+---
+
+## 🔮 Future Enhancements
+- Add **typing animation** for AI responses (like chatbots).  
+- Support for **DOCX file uploads**.  
+- Save feedback as a downloadable **PDF report**.  
+- Add **multi-language support** for global job seekers.  
+
+---
+
+## 🛠️ Tech Stack
+- **Frontend/UI**: Streamlit + Custom CSS  
+- **Backend**: Python  
+- **AI Engine**: OpenAI GPT (`gpt-4o-mini`)  
+
+---
+
+## 📜 License
+This project is licensed under the MIT License.  
